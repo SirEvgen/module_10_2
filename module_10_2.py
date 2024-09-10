@@ -1,0 +1,34 @@
+import random
+from threading import Thread
+import time
+from colorama import Fore
+
+
+class Knight(Thread):
+    def __init__(self, name, power):
+        super().__init__()
+        color = [Fore.BLUE, Fore.GREEN, Fore.RED, Fore.CYAN, Fore.YELLOW]
+        self.color_res = random.choice(color)
+        self.name = name
+        self.power = power
+        self.enemies = 100
+
+    def run(self):
+        print(f"{self.color_res + self.name}, на нас напали!")
+        k = 0
+        while self.enemies > 0 and k <= self.power:
+            self.enemies -= self.power
+            time.sleep(1)
+            k += 1
+            print(f"{self.color_res + self.name} сражается {k}, осталось {self.enemies} воинов.")
+        if self.enemies == 0:
+            print(f"{self.name} одержал победу спустя {k} дней!")
+
+    def start(self):
+        Thread.start(self)
+
+
+first_knight = Knight('Sir Lancelot', 10)
+second_knight = Knight("Sir Galahad", 20)
+first_knight.start()
+second_knight.start()
