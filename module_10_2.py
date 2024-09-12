@@ -16,8 +16,10 @@ class Knight(Thread):
     def run(self):
         print(f"{self.color_res + self.name}, на нас напали!")
         k = 0
-        while self.enemies > 0 and k <= self.power:
+        while self.enemies > 0:
             self.enemies -= self.power
+            if self.enemies < self.power:
+                self.power = self.enemies
             time.sleep(1)
             k += 1
             print(f"{self.color_res + self.name} сражается {k} день, осталось {self.enemies} воинов.")
@@ -28,7 +30,7 @@ class Knight(Thread):
         Thread.start(self)
 
 
-first_knight = Knight('Sir Lancelot', 10)
-second_knight = Knight("Sir Galahad", 20)
+first_knight = Knight('Sir Lancelot', 9)
+second_knight = Knight("Sir Galahad", 7)
 first_knight.start()
 second_knight.start()
